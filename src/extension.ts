@@ -22,8 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let html: string = ``;
 	let foldersHtml: string = ``;
 	
-	const myStyle = webview.asWebviewUri(vscode.Uri.joinPath(
-		  context.extensionUri, 'media', 'style.css'));   // <--- 'media' is the folder where the .css file is stored
+	const myStyle = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'media', 'style.css'));   // <--- 'media' is the folder where the .css file is stored
 	
 	let carrierlist = await renderCarrierList();
 	// construct your HTML code
@@ -31,12 +30,21 @@ export function activate(context: vscode.ExtensionContext) {
 			<!DOCTYPE html>
 			<html>
 				<head>
-				  <link href="${myStyle}" rel="stylesheet" />   
+				  	<link href="${myStyle}" rel="stylesheet" />   
 				</head>
 				<body>
 				  <div class="main"> 
+
+				  <label for="carriers">Choose a carrier:</label>
+
+				  <select name="cars" id="cars">
+				   ${getCarrierOptionList()}
+				  </select>
+
+				  	 <input id="myValue" type="number"></input>
+					  <input id="myUnit" type="text"></input>
+
 					<div class="carrier-list">`+ carrierlist +` </div>
-					<div class="carrier-detail">`+ getCarrierDetail() +` </div>
 				  </div>
 				</body>
 			 </html>
@@ -46,9 +54,24 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
 
+  function getCarriers(){
+	  let carriers= ["ups", "tnt", "dhl", "dpd", "dsv", "rhenus"];
+	  return carriers;
+  }
+
+  function getCarrierOptionList(): string {
+	let html: string = ``;
+	
+	getCarriers().forEach(carrier => {
+		html+= `<option value="${carrier}">${carrier}</option>`;
+	});
+	return html;
+  }
+
   async function renderCarrierList(): Promise<string> {
 	let html: string = ``;
-	let allIntegrations = await vscode.workspace.findFiles('**/*.integration.json');
+	let carrier: string = `UPS`;	
+	let allIntegrations = await vscode.workspace.findFiles('**/carriers/ups/**');
 
 	allIntegrations.forEach(async element => {
 		html += `<li>${element.path}</li>`;

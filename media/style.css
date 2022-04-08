@@ -4,12 +4,10 @@
     justify-content: center;
 }
 
-.main div {
-
-}
 .scenarios div{
      float: left;
 }
+
 .navbar {
     overflow: hidden;
     background-color: #e9e9e9;
