@@ -121,7 +121,6 @@ function startScript (fileName ?: string , filePath ?: string , command ?: strin
 
 
 
-					<div class="carrier-list">`+ carrierlist +` </div>
 				  </div>
 				</body>
 			 </html>
