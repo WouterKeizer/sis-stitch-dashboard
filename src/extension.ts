@@ -21,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
 		  };
 
 		//Creates a webview with as default carrier selection
-		updateWebview("tnt");
+		updateWebview("");
 
 		panel.webview.onDidReceiveMessage(
 			message => {
@@ -56,8 +56,7 @@ export function activate(context: vscode.ExtensionContext) {
 				</head>
 				<body>
 				<div class="header">
-					<button role="button" onclick="selectCarrier()" id="startCarrier">Start Carrier</button>
-					<select id="SelectedCarrier">
+					<select id="SelectedCarrier" onchange="selectCarrier()">
 						${getCarrierOptionList()}
 					</select>
 				</div>
