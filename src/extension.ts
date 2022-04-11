@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import { BrotliCompress } from 'zlib';
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -22,7 +21,8 @@ export function activate(context: vscode.ExtensionContext) {
 	let html: string = ``;
 	let foldersHtml: string = ``;
 	
-	const myStyle = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'media', 'style.css'));   // <--- 'media' is the folder where the .css file is stored
+	const myStyle = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, '../src/media', 'style.css'));   // <--- 'media' is the folder where the .css file is stored
+	const mainUri = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, '../src/scripts', 'main.js'));
 	
 	let carrierlist = await renderCarrierList();
 	// construct your HTML code
@@ -35,6 +35,11 @@ export function activate(context: vscode.ExtensionContext) {
 				<body>
 				  <div class="main"> 
 
+					<button class="carrier-button">
+					<vscode-button id="submit-carrier">Save</vscode-button>
+
+					<button type="button" onclick="alert('Hello world!')">Click Me!</button>
+
 				  <label for="carriers">Choose a carrier:</label>
 
 				  <select name="cars" id="cars">
@@ -44,7 +49,6 @@ export function activate(context: vscode.ExtensionContext) {
 				  	 <input id="myValue" type="number"></input>
 					  <input id="myUnit" type="text"></input>
 
-					<div class="carrier-list">`+ carrierlist +` </div>
 				  </div>
 				</body>
 			 </html>
