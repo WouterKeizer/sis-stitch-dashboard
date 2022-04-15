@@ -39,19 +39,20 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 }
 
-  async function getMyWebviewContent(webview: vscode.Webview, context: any, carrier:string) : Promise<string> { 
+async function getMyWebviewContent(webview: vscode.Webview, context: any, carrier:string) : Promise<string> { 
 	let html: string = ``;
-	
+
 	const styleURI = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'media', 'style.css'));   
 	const scriptURI = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'src/scripts', 'main.js'));  
-	
+
 	let carrierlist = await rCarrierList(carrier);
 
-	html += `
+	html += /*html*/
+	`
 			<!DOCTYPE html>
 			<html>
 				<head>
-				  	<link href="${styleURI}" rel="stylesheet" />  
+					<link href="${styleURI}" rel="stylesheet" />  
 					<script src="${scriptURI}"></script> 
 				</head>
 				<body>
@@ -61,15 +62,15 @@ export function activate(context: vscode.ExtensionContext) {
 					</select>
 				</div>
 				<div class="main">
-				  <h1>${carrier}</h1>
+					<h1>${carrier}</h1>
 					${carrierlist}
 				<div>
 				</body>
-			 </html>
+				</html>
 	`;
 	// -----------------------
 	return html;
-  }
+}
 
 function getCarriers(){
 	let carriers= ["ups", "tnt", "dhl", "dpd", "dsv", "rhenus"];
