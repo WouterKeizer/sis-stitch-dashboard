@@ -1,7 +1,4 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
-
-import { BrotliCompress } from 'zlib';
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
