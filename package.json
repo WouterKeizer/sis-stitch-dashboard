@@ -10,14 +10,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:mypanel.start"
+    "onCommand:mypanel.start_dashboard"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "mypanel.start",
-        "title": "start dashboard"
+        "command": "mypanel.start_dashboard",
+        "title": "Start carrier dashboard"
       }
     ]
   },

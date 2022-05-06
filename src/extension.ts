@@ -5,7 +5,7 @@ import { BrotliCompress } from 'zlib';
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
-	  vscode.commands.registerCommand('mypanel.start', () => {
+	  vscode.commands.registerCommand('mypanel.start_dashboard', () => {
 		// Create and show panel
 		const panel = vscode.window.createWebviewPanel(
 		  'mypanel',  // <--- identifier
@@ -43,7 +43,7 @@ async function getMyWebviewContent(webview: vscode.Webview, context: any, carrie
 	let html: string = ``;
 
 	const styleURI = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'media', 'style.css'));   
-	const scriptURI = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'src/scripts', 'main.js'));  
+	const scriptURI = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'scripts', 'main.js'));  
 
 	let carrierlist = await rCarrierList(carrier);
 
