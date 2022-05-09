@@ -1,97 +1,17 @@
 import * as vscode from 'vscode';
+import { CarrierDashboard } from './panels/CarrierDashboard';
+import { HelloWorldPanel } from "./panels/HelloWorldPanel";
 
 export function activate(context: vscode.ExtensionContext) {
-	context.subscriptions.push(
-	  vscode.commands.registerCommand('mypanel.start_dashboard', () => {
-		// Create and show panel
-		const panel = vscode.window.createWebviewPanel(
-		  'mypanel',  // <--- identifier
-		  'Stitch dashboard', // <--- title
-		  vscode.ViewColumn.One,
-		  {
-			  enableScripts: true
-		  }
-		);
-  
-		const updateWebview = (carrier: string) => {
-			getMyWebviewContent(panel.webview, context, carrier).then(html =>panel.webview.html = html);   // <--- HTML
-		  };
 
-		//Creates a webview with as default carrier selection
-		updateWebview("");
-
-		panel.webview.onDidReceiveMessage(
-			message => {
-				switch (message.command) {
-					case 'startCarrier':
-						updateWebview(message.text);
-						break;
-				}
-				return;
-			},
-			undefined,
-			context.subscriptions
-		);
-	  })
-	);
-}
-
-async function getMyWebviewContent(webview: vscode.Webview, context: any, carrier:string) : Promise<string> { 
-	let html: string = ``;
-
-	const styleURI = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'media', 'style.css'));   
-	const scriptURI = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'scripts', 'main.js'));  
-
-	let carrierlist = await rCarrierList(carrier);
-
-	html += /*html*/
-	`
-			<!DOCTYPE html>
-			<html>
-				<head>
-					<link href="${styleURI}" rel="stylesheet" />  
-					<script src="${scriptURI}"></script> 
-				</head>
-				<body>
-				<div class="header">
-					<select id="SelectedCarrier" onchange="selectCarrier()">
-						${getCarrierOptionList()}
-					</select>
-				</div>
-				<div class="main">
-					<h1>${carrier}</h1>
-					${carrierlist}
-				<div>
-				</body>
-				</html>
-	`;
-	// -----------------------
-	return html;
-}
-
-function getCarriers(){
-	let carriers= ["ups", "tnt", "dhl", "dpd", "dsv", "rhenus"];
-	return carriers;
-}
-
-function getCarrierOptionList(): string {
-	let html: string = ``;
-	getCarriers().forEach(carrier => {
-		html+= `<option value="${carrier}">${carrier}</option>`;
+	const helloCommand = vscode.commands.registerCommand("hello-world.helloWorld", () => {
+		HelloWorldPanel.render(context.extensionUri);
 	});
-	return html;
-}
+	context.subscriptions.push(helloCommand);
 
-async function rCarrierList(srCarrier:string): Promise<string> {
-	let html: string = ``;
-	let allIntegrations = await vscode.workspace.findFiles(`**/carriers/${srCarrier}/**`);
-
-	allIntegrations.forEach(async element => {
-		html += `<li>${element.path}</li>`;
-
-	// Example on reading file
-	// let document = await vscode.workspace.openTextDocument(element.path);
-	// document.getText();
+	const carrierDashboard = vscode.commands.registerCommand("sis-dashboard.carrier", () => {
+		CarrierDashboard.render(context.extensionUri);
 	});
-	return html;
-}
+	context.subscriptions.push(carrierDashboard);
+	
+  }

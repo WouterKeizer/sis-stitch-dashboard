@@ -1,7 +1,7 @@
 {
-  "name": "dash1",
-  "displayName": "dash1",
-  "description": "dash1",
+  "name": "carrier_dashboard_stitch",
+  "displayName": "Carrier Dashboard Stitch",
+  "description": "A Carrier Dashboard for Stitch",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.66.0"
@@ -10,14 +10,19 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:mypanel.start_dashboard"
+    "onCommand:sis-dashboard.carrier",
+    "onCommand:hello-world.helloWorld"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "mypanel.start_dashboard",
+        "command": "sis-dashboard.carrier",
         "title": "Start carrier dashboard"
+      },
+      {
+        "command": "hello-world.helloWorld",
+        "title": "Hello World Wouter"
       }
     ]
   },
